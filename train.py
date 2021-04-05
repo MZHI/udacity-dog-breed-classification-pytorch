@@ -4,7 +4,7 @@ from pathlib import Path
 from tensorboardX import SummaryWriter
 from utils.general_utils import check_chkpnt_exist, create_checkpoint_name
 from utils.general_utils import ask_for_delete
-
+from train_utils import create_loaders
 
 def get_args():
     parser = argparse.ArgumentParser('''Train classification model''')
@@ -110,9 +110,11 @@ def main(args):
     # create tensorboard writer
     writer = SummaryWriter(tensorboard_dir)
 
-    # TODO load datasets and set dataloaders
+    # load datasets and set dataloaders
+    loaders = create_loaders(data_path, mean, std, batch_size, num_workers)
 
     # TODO load model and optimizer if resume-train=1
+
 
     # TODO main loop
 
