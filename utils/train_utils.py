@@ -22,15 +22,15 @@ def create_loaders(data_path, mean, std, batch_size, num_workers):
         normalize
     ])
 
-    train_data = datasets.ImageFolder(Path(data_path) / "train", trainsform=preprocess)
-    valid_data = datasets.ImageFolder(Path(data_path) / "valid", trainsform=preprocess)
-    test_data = datasets.ImageFolder(Path(data_path) / "test", trainsform=preprocess)
+    train_data = datasets.ImageFolder(Path(data_path) / "train", transform=preprocess)
+    valid_data = datasets.ImageFolder(Path(data_path) / "valid", transform=preprocess)
+    test_data = datasets.ImageFolder(Path(data_path) / "test", transform=preprocess)
 
-    loaders = {'train': torch.utils.DataLoader(train_data, batch_size=batch_size,
+    loaders = {'train': torch.utils.data.DataLoader(train_data, batch_size=batch_size,
                                                num_workers=num_workers, shuffle=True),
-               'valid': torch.utils.DataLoader(valid_data, batch_size=batch_size,
+               'valid': torch.utils.data.DataLoader(valid_data, batch_size=batch_size,
                                                num_workers=num_workers, shuffle=True),
-               'test': torch.utils.DataLoader(test_data, batch_size=batch_size,
+               'test': torch.utils.data.DataLoader(test_data, batch_size=batch_size,
                                               num_workers=num_workers, shuffle=True)}
     return loaders
 
@@ -80,7 +80,7 @@ def train(n_epochs, loaders, model, optimizer, criterion, use_cuda,
                 optimizer.zero_grad()
                 output = model(data)
                 loss = criterion(output, target)
-                loss.bachward()
+                loss.backward()
                 optimizer.step()
                 train_loss += loss.item() * data.size(0)
                 tepoch.set_postfix(loss=train_loss)

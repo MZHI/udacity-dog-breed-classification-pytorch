@@ -72,7 +72,7 @@ def main(args):
 
     # set local input params from args
     data_path = args.data_path
-    checkpoints_dir = args.checkopints_dir
+    checkpoints_dir = args.checkpoints_dir
     device = args.device
     log_path = args.log_path
     batch_size = args.batch_size
@@ -102,12 +102,12 @@ def main(args):
 
     if resume_train:
         # check existing of checkpoint if resume_train==1
-        if not check_chkpnt_exist(checkpoint_name, checkpoints_dir):
+        if not check_checkpoint_exist(str(checkpoint_dir)):
             raise Exception("For --resume-train==1 checkpoint {} must exist".format(checkpoint_name))
     else:
         # check if directory for this checkpoint_name doesn't exist.
         # and ask for delete if exists
-        if check_chkpnt_exist(checkpoint_name, checkpoints_dir):
+        if check_checkpoint_exist(str(checkpoint_dir)):
             ask_for_delete(str(checkpoint_dir))
 
     # create directories for checkpoint and tensorboard logs
@@ -141,7 +141,11 @@ def main(args):
     criterion = nn.CrossEntropyLoss()
 
     # TODO main loop
-    train(num_epochs, loaders, model, optimizer, criterion, use_cuda, resume_train, result_dict=None)
+    train(num_epochs, loaders, model, optimizer, criterion, use_cuda, writer, resume_train, result_dict=None)
+
+    print("Train process finished")
+    if writer is not None:
+        writer.close()
 
 
 if __name__ == "__main__":
