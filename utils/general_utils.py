@@ -77,4 +77,4 @@ def save_checkpoint(checkpoint: dict, save_path: str, checkpoint_type: str = 'be
     res_path = str(save_path_item / '{}{}.pt'.format(checkpoint_type, save_path_item.name))
 
     torch.save(checkpoint, res_path)
-    print("SUCCESSFULLY SAVED '{}' checkpoint to: {}".format(checkpoint_type, save_path))
+    print("SUCCESSFULLY SAVED '{}' checkpoint to: {}".format(checkpoint_type, res_path))

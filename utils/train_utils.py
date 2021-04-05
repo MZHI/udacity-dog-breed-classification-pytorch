@@ -144,11 +144,31 @@ def train(checkpoint_path: str, n_epochs, loaders, model, optimizer, criterion, 
                                             delta_time.seconds +
                                             delta_time.days * 24 * 3600,
                 # 'classes_dict': classes_dict,
-                'checkpoint_path': checkpoint_path
+                'checkpoint_name': Path(checkpoint_path).name
             }
             save_checkpoint(checkpoint=checkpoint, save_path=checkpoint_path,
                             checkpoint_type='best')
             valid_loss_min = valid_loss
             best_epoch = epoch
+
+        # save last checkpoint:
+        delta_time = datetime.now() - start_training_time
+        checkpoint = {
+            'datetime_saved': datetime.now(),
+            'epoch': epoch,
+            'loss_train': train_loss,
+            'loss_val': valid_loss,
+            'lr': lr,
+            'num_classes': num_classes,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'total_train_time_seconds': total_train_time_seconds +
+                                        delta_time.seconds +
+                                        delta_time.days * 24 * 3600,
+            # 'classes_dict': classes_dict,
+            'checkpoint_path': Path(checkpoint_path).name
+        }
+        save_checkpoint(checkpoint=checkpoint, save_path=checkpoint_path,
+                        checkpoint_type='last')
 
     return model, best_epoch

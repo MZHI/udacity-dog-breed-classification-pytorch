@@ -109,10 +109,14 @@ def main(args):
         # and ask for delete if exists
         if check_checkpoint_exist(str(checkpoint_dir)):
             ask_for_delete(str(checkpoint_dir))
+        if check_checkpoint_exist(str(tensorboard_dir)):
+            ask_for_delete(str(tensorboard_dir))
 
     # create directories for checkpoint and tensorboard logs
     checkpoint_dir.parent.mkdir(exist_ok=True)
+    checkpoint_dir.mkdir(exist_ok=True)
     tensorboard_dir.parent.mkdir(exist_ok=True)
+    tensorboard_dir.mkdir(exist_ok=True)
 
     # create tensorboard writer
     writer = SummaryWriter(tensorboard_dir)
