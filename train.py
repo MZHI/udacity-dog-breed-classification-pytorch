@@ -1,11 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding utf-8 -*-
+
 import argparse
 import torch
 from pathlib import Path
 from tensorboardX import SummaryWriter
 import torch.nn as nn
-from utils.general_utils import check_chkpnt_exist, create_checkpoint_name
+from utils.general_utils import check_checkpoint_exist, create_checkpoint_name
 from utils.general_utils import ask_for_delete, init_optimizer
-from train_utils import create_loaders
+from utils.train_utils import create_loaders
 from models.model_utils import init_model
 from utils.train_utils import train
 
@@ -35,7 +38,7 @@ def get_args():
     parser.add_argument('--std', nargs='+', default=[0.229, 0.224, 0.225], type=float,
                         help='RGB std for image normalization')
     parser.add_argument('--lr', type=float, default=0.01,
-                        htlp="Learning rate")
+                        help="Learning rate")
     parser.add_argument('--optim', type=str, required=False, default='SGD',
                         help="Type of optimizer. Select from: [SGD, Adam]")
     parser.add_argument('--momentum', type=float, required=False, default=0.9,
