@@ -1,3 +1,5 @@
+# -*- coding utf-8 -*-
+
 import torch.nn as nn
 import torch.nn.functional as F
 from torch import sigmoid

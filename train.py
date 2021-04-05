@@ -138,10 +138,26 @@ def main(args):
     assert model
     assert optimizer
 
+    scheduler = None
+    if scheduler_factor is not None and scheduler_patience is not None:
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, patience=scheduler_patience, verbose=True, factor=scheduler_factor, cooldown=scheduler_cooldown
+        )
+
     criterion = nn.CrossEntropyLoss()
 
     # TODO main loop
-    train(num_epochs, loaders, model, optimizer, criterion, use_cuda, writer, resume_train, result_dict=None)
+    train(str(checkpoint_dir),
+          num_epochs,
+          loaders,
+          model,
+          optimizer,
+          criterion,
+          use_cuda,
+          writer,
+          scheduler,
+          resume_train,
+          result_dict=None)
 
     print("Train process finished")
     if writer is not None:

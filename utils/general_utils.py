@@ -1,4 +1,7 @@
+# -*- coding utf-8 -*-
+
 from pathlib import Path
+import torch
 import torch.optim as optim
 import shutil
 
@@ -53,8 +56,25 @@ def init_optimizer(optimizer_type,
                      model, lr, momentum=None):
     # TODO set schedule for lr decreasing
     optimizer = None
+    m = 0
+    if momentum is not None:
+        m = momentum
     if optimizer_type == "SGD":
-        optimizer = optim.SGD(model.parameters(), lr=lr)
+        optimizer = optim.SGD(model.parameters(), lr=lr, momentum=m)
     elif optimizer_type == "Adam":
         optimizer = optim.Adam(model.parameters(), lr=lr)
     return optimizer
+
+
+def save_checkpoint(checkpoint: dict, save_path: str, checkpoint_type: str = 'best'):
+    checkpoint_type = checkpoint_type.replace(' ', '_')
+    if len(checkpoint_type) != 0:
+        if checkpoint_type[-1] != '-':
+            checkpoint_type += '-'  # 'best' -> 'best-' OR 'epoch_10' -> 'epoch_10-'
+
+    save_path_item = Path(save_path)
+
+    res_path = str(save_path_item / '{}{}.pt'.format(checkpoint_type, save_path_item.name))
+
+    torch.save(checkpoint, res_path)
+    print("SUCCESSFULLY SAVED '{}' checkpoint to: {}".format(checkpoint_type, save_path))

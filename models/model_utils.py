@@ -1,3 +1,4 @@
+# -*- coding utf-8 -*-
 
 from models.nn_alex_net import BasicCNN
 
