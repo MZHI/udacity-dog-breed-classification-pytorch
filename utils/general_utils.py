@@ -3,7 +3,6 @@ import torch.optim as optim
 import shutil
 
 optimizers = ['SGD', 'Adam']
-models = ['Base', 'AlexNet']
 
 
 def create_checkpoint_name(prefix,
@@ -23,10 +22,6 @@ def check_checkpoint_exist(checkpoint_path: str):
 
 def check_optimizer_type(optimizer_type):
     return optimizer_type in optimizers
-
-
-def check_model_type(model_type):
-    return model_type in models
 
 
 def ask_for_delete(path: str):
@@ -54,7 +49,7 @@ def ask_for_delete(path: str):
             raise KeyboardInterrupt('Decline to delete path. Program stopped')
 
 
-def create_optimizer(optimizer_type,
+def init_optimizer(optimizer_type,
                      model, lr, momentum=None):
     # TODO set schedule for lr decreasing
     optimizer = None

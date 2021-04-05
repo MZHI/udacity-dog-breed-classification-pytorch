@@ -2,9 +2,13 @@ import argparse
 import torch
 from pathlib import Path
 from tensorboardX import SummaryWriter
+import torch.nn as nn
 from utils.general_utils import check_chkpnt_exist, create_checkpoint_name
-from utils.general_utils import ask_for_delete
+from utils.general_utils import ask_for_delete, init_optimizer
 from train_utils import create_loaders
+from models.model_utils import init_model
+from utils.train_utils import train
+
 
 def get_args():
     parser = argparse.ArgumentParser('''Train classification model''')
@@ -113,10 +117,29 @@ def main(args):
     # load datasets and set dataloaders
     loaders = create_loaders(data_path, mean, std, batch_size, num_workers)
 
-    # TODO load model and optimizer if resume-train=1
+    if num_classes is None:
+        num_classes = len(loaders['train'].dataset.class_to_idx)
 
+    model = None
+    optimizer = None
+    if resume_train:
+        # TODO load model and optimizer
+        pass
+    else:
+        # create model and optimizer
+        model = init_model(model_type, num_classes)
+        if use_cuda:
+            model.cuda()
+        optimizer = init_optimizer(optimizer_name, model, lr, momentum)
+
+    assert model
+    assert optimizer
+
+    criterion = nn.CrossEntropyLoss()
 
     # TODO main loop
+    train(num_epochs, loaders, model, optimizer, criterion, use_cuda, resume_train, result_dict=None)
+
 
 if __name__ == "__main__":
     args = get_args()
