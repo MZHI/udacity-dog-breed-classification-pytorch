@@ -150,7 +150,7 @@ def main(args):
 
     criterion = nn.CrossEntropyLoss()
 
-    # TODO main loop
+    # training process
     train(str(checkpoint_dir),
           num_epochs,
           loaders,
@@ -161,7 +161,8 @@ def main(args):
           writer,
           scheduler,
           resume_train,
-          result_dict=None)
+          result_dict=None,
+          early_stopping=early_stopping)
 
     print("Train process finished")
     if writer is not None:

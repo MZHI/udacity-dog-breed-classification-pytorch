@@ -39,7 +39,7 @@ def create_loaders(data_path, mean, std, batch_size, num_workers):
 
 
 def train(checkpoint_path: str, n_epochs, loaders, model, optimizer, criterion, use_cuda,
-          writer=None, scheduler=None, resume_train=False, result_dict=None):
+          writer=None, scheduler=None, resume_train=False, result_dict=None, early_stopping=10):
     """
         :param checkpoint_path  path to checkpoint's directory. [checkpoints_dir]/[checkpoint_name]
         :param n_epochs:        number of epochs
@@ -52,6 +52,7 @@ def train(checkpoint_path: str, n_epochs, loaders, model, optimizer, criterion, 
         :param scheduler        scheduler for learning rate
         :param resume_train     flag to resume train model
         :param result_dict      state dictionary, using if resume_train=True
+        :param early_stopping   early stopping
     """
 
     valid_loss_min = np.Inf
@@ -183,6 +184,28 @@ def train(checkpoint_path: str, n_epochs, loaders, model, optimizer, criterion, 
                             checkpoint_type='best')
             valid_loss_min = valid_loss
             best_epoch = epoch
+        elif epoch - best_epoch > early_stopping:
+            # ---------- check for stop training process ---------- #
+            delta_time = datetime.now() - start_training_time
+            print('STOPPED at {} epoch'.format(epoch))
+            checkpoint = {
+                'datetime_saved': datetime.now(),
+                'epoch': epoch,
+                'loss_train': train_loss,
+                'loss_val': valid_loss,
+                'lr': lr,
+                'num_classes': num_classes,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'total_train_time_seconds': total_train_time_seconds +
+                                            delta_time.seconds +
+                                            delta_time.days * 24 * 3600,
+                # 'classes_dict': classes_dict,
+                'checkpoint_path': Path(checkpoint_path).name
+             }
+            save_checkpoint(checkpoint=checkpoint, save_path=checkpoint_path,
+                            checkpoint_type='last')
+            break
 
         # save last checkpoint:
         delta_time = datetime.now() - start_training_time
