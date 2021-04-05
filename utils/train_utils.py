@@ -111,18 +111,51 @@ def train(checkpoint_path: str, n_epochs, loaders, model, optimizer, criterion, 
         valid_loss /= len(loaders['valid'].sampler)
 
         if writer is not None:
-            writer.add_scalar('{}/TrainLoss'.format("train"), train_loss, epoch)
-            writer.add_scalar('{}/ValidLoss'.format("val"), valid_loss, epoch)
+            writer.add_scalar('train/TrainLoss', train_loss, epoch)
+            writer.add_scalar('val/ValidLoss', valid_loss, epoch)
 
         if scheduler is not None:
             scheduler.step(valid_loss)
 
         # print training/validation statistics
-        # print('Epoch: {} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(
-        #     epoch,
-        #     train_loss,
-        #     valid_loss
-        # ))
+        print('Epoch: {} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(
+            epoch,
+            train_loss,
+            valid_loss
+        ))
+
+        ##########################
+        ### evaluation on test ###
+        ##########################
+        test_loss = 0.0
+        correct = 0.0
+        total = 0.0
+        model.eval()
+        with tqdm(loaders['test'], unit="batch") as ttepoch:
+            for data, target in ttepoch:
+                if use_cuda:
+                    data, target = data.cuda(), target.cuda()
+                output = model(data)
+                loss = criterion(output, target)
+                test_loss += loss.item() * data.size(0)
+                #         test_loss = test_loss + ((1 / (batch_idx + 1)) * (loss.data - test_loss))
+
+                # convert output probabilities to predicted class
+                pred = output.data.max(1, keepdim=True)[1]
+                # compare predictions to true label
+                correct += np.sum(np.squeeze(pred.eq(target.data.view_as(pred)).cpu().numpy()))
+                total += data.size(0)
+                ttepoch.set_postfix(loss=test_loss, accuracy=f"{correct * 100.0 / total:.2f}%")
+
+        test_loss /= len(loaders['test'].sampler)
+
+        if writer is not None:
+            writer.add_scalar('test/TestLoss', test_loss, epoch)
+            writer.add_scalar('test/TestAccuracy', 100.0 * correct / total, epoch)
+
+        print('Test Loss: {:.6f}\n'.format(test_loss))
+        print('\nTest Accuracy: %2d%% (%2d/%2d)' % (
+            100. * correct / total, correct, total))
 
         # save the model if validation loss has decreased
         if valid_loss < valid_loss_min:
