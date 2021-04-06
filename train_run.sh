@@ -133,24 +133,91 @@
 #  --resume-train 0
 
 ### experiment 7
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs \
+#  --batch-size 256 \
+#  --num-epochs 500 \
+#  --early-stopping 20 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.00001 \
+#  --optim Adam \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --model-type Base \
+#  --prefix scratch_exp_07 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 8
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs \
+#  --batch-size 256 \
+#  --num-epochs 500 \
+#  --early-stopping 20 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --model-type Base \
+#  --prefix scratch_exp_08 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 9
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 0 \
+#  --log-path tensorboard_logs \
+#  --batch-size 256 \
+#  --num-epochs 500 \
+#  --early-stopping 20 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.1 \
+#  --optim SGD \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --model-type Base \
+#  --prefix scratch_exp_09 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 10
 python3 train.py --data-path data/dogImages \
  --checkpoints-dir checkpoints \
- --device 1 \
+ --device 0 \
  --log-path tensorboard_logs \
- --batch-size 256 \
+ --batch-size 32 \
  --num-epochs 500 \
- --early-stopping 20 \
- --num-workers 4 \
+ --early-stopping 10 \
+ --num-workers 2 \
  --num-classes 133 \
- --lr 0.00001 \
- --optim Adam \
+ --lr 0.01 \
+ --optim SGD \
+ --mean 0.4864 0.4560 0.3918 \
+ --std 0.2602 0.2536 0.2562 \
  --momentum 0.9 \
  --dropout 0.5 \
  --model-type Base \
- --prefix scratch_exp_07 \
+ --prefix scratch_exp_10 \
  --scheduler-patience 3 \
  --scheduler-factor 0.5 \
  --scheduler-cooldown 2 \
  --save-last 1 \
  --resume-train 0
-
