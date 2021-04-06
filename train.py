@@ -50,6 +50,8 @@ def get_args():
                         help="Value for dropout. Default 0.5")
     parser.add_argument('--use-augm', type=int, required=False, default=1,
                         help="Use or not augmentation for train dataset. Default 1")
+    parser.add_argument('--color-jitter', nargs='+', type=float, default=[0.0, 0.0, 0.0, 0.0],
+                        help="Parameters of brightness, contrast, saturation and hue for ColorJitter transforms")
     parser.add_argument('--model-type', type=str, required=True,
                         help="Type of network model. Select from: [Base, AlexNet]")
     parser.add_argument('--prefix', type=str, required=False,
@@ -100,6 +102,7 @@ def main(args):
     resume_train = args.resume_train
     weight_decay = args.weight_decay
     use_augm = args.use_augm
+    color_jitter = args.color_jitter
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,

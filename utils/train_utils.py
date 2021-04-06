@@ -9,22 +9,32 @@ from pathlib import Path
 from PIL import ImageFile
 from tqdm import tqdm
 from utils.general_utils import save_checkpoint
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-def create_loaders(data_path, mean, std, batch_size, num_workers, use_augm=True):
+def create_loaders(data_path, mean, std, batch_size, num_workers,
+                   use_augm=True, color_jit_params=[0.0, 0.0, 0.0, 0.0]):
     # TODO add augmentations
     normalize = transforms.Normalize(
         mean=mean,
         std=std
     )
+
+    torch.manual_seed(184)
+
     preprocess = transforms.Compose([
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
         normalize
     ])
+
     preprocess_augm = transforms.Compose([
+        transforms.ColorJitter(brightness=color_jit_params[0],
+                               contrast=color_jit_params[1],
+                               saturation=color_jit_params[2],
+                               hue=color_jit_params[3]),
         transforms.RandomResizedCrop(224),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
@@ -36,11 +46,11 @@ def create_loaders(data_path, mean, std, batch_size, num_workers, use_augm=True)
     test_data = datasets.ImageFolder(Path(data_path) / "test", transform=preprocess)
 
     loaders = {'train': torch.utils.data.DataLoader(train_data, batch_size=batch_size,
-                                               num_workers=num_workers, shuffle=True),
+                                                    num_workers=num_workers, shuffle=True),
                'valid': torch.utils.data.DataLoader(valid_data, batch_size=batch_size,
-                                               num_workers=num_workers, shuffle=True),
+                                                    num_workers=num_workers, shuffle=True),
                'test': torch.utils.data.DataLoader(test_data, batch_size=batch_size,
-                                              num_workers=num_workers, shuffle=True)}
+                                                   num_workers=num_workers, shuffle=True)}
     return loaders
 
 
@@ -208,7 +218,7 @@ def train(checkpoint_path: str, n_epochs, loaders, model, optimizer, criterion, 
                                             delta_time.days * 24 * 3600,
                 # 'classes_dict': classes_dict,
                 'checkpoint_path': Path(checkpoint_path).name
-             }
+            }
             save_checkpoint(checkpoint=checkpoint, save_path=checkpoint_path,
                             checkpoint_type='last')
             break
