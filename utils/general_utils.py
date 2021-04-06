@@ -72,16 +72,16 @@ def check_cuda_device_id(device_id):
     return out_device_id
 
 
-def init_optimizer(optimizer_type, model, lr, momentum=None):
+def init_optimizer(optimizer_type, model, lr, weight_decay=0.0, momentum=None):
     # TODO set schedule for lr decreasing
     optimizer = None
     m = 0
     if momentum is not None:
         m = momentum
     if optimizer_type == "SGD":
-        optimizer = optim.SGD(model.parameters(), lr=lr, momentum=m)
+        optimizer = optim.SGD(model.parameters(), lr=lr, momentum=m, weight_decay=weight_decay)
     elif optimizer_type == "Adam":
-        optimizer = optim.Adam(model.parameters(), lr=lr)
+        optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
     return optimizer
 
 

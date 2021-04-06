@@ -199,6 +199,30 @@
 #  --resume-train 0
 
 ### experiment 10
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 0 \
+#  --log-path tensorboard_logs \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 2 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --mean 0.4864 0.4560 0.3918 \
+#  --std 0.2602 0.2536 0.2562 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --model-type Base \
+#  --prefix scratch_exp_10 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 11
 python3 train.py --data-path data/dogImages \
  --checkpoints-dir checkpoints \
  --device 0 \
@@ -206,18 +230,20 @@ python3 train.py --data-path data/dogImages \
  --batch-size 32 \
  --num-epochs 500 \
  --early-stopping 10 \
- --num-workers 2 \
+ --num-workers 4 \
  --num-classes 133 \
  --lr 0.01 \
  --optim SGD \
+ --weight-decay 0.0005 \
  --mean 0.4864 0.4560 0.3918 \
  --std 0.2602 0.2536 0.2562 \
  --momentum 0.9 \
  --dropout 0.5 \
  --model-type Base \
- --prefix scratch_exp_10 \
+ --prefix scratch_exp_11_wd_0.0005 \
  --scheduler-patience 3 \
  --scheduler-factor 0.5 \
  --scheduler-cooldown 2 \
  --save-last 1 \
  --resume-train 0
+

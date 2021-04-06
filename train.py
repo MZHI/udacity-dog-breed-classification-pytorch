@@ -44,6 +44,8 @@ def get_args():
                         help="Type of optimizer. Select from: [SGD, Adam]")
     parser.add_argument('--momentum', type=float, required=False, default=0.9,
                         help="Momentum. Using only for SGD optimizer. Default 0.9")
+    parser.add_argument('--weight-decay', type=float, required=False, default=0.0,
+                        help="Weight decay. Using in SGD and Adam optimizers")
     parser.add_argument('--dropout', type=float, default=0.5,
                         help="Value for dropout. Default 0.5")
     parser.add_argument('--model-type', type=str, required=True,
@@ -94,6 +96,7 @@ def main(args):
     scheduler_cooldown = args.scheduler_cooldown
     save_last = args.save_last
     resume_train = args.resume_train
+    weight_decay = args.weight_decay
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,
@@ -145,7 +148,7 @@ def main(args):
         model = init_model(model_type, num_classes)
         if use_cuda:
             model.cuda()
-        optimizer = init_optimizer(optimizer_name, model, lr, momentum)
+        optimizer = init_optimizer(optimizer_name, model, lr, weight_decay, momentum)
 
     assert model
     assert optimizer
