@@ -67,6 +67,8 @@ def get_args():
                         help="Whether to save last checkpoint besides the best")
     parser.add_argument('--resume-train', type=int, default=False,
                         help="Is resume specific experiment or train from scratch")
+    parser.add_argument('--pretrained', type=int, default=0,
+                        help="Whether to use pretrained model. Not available for Base_X models. Default 0")
 
     args = parser.parse_args()
     return args
@@ -103,6 +105,7 @@ def main(args):
     weight_decay = args.weight_decay
     use_augm = args.use_augm
     color_jitter = args.color_jitter
+    pretrained = args.pretrained
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,
@@ -151,7 +154,7 @@ def main(args):
         pass
     else:
         # create model and optimizer
-        model = init_model(model_type, num_classes)
+        model = init_model(model_type, num_classes, pretrained)
         if use_cuda:
             model.cuda()
         optimizer = init_optimizer(optimizer_name, model, lr, weight_decay, momentum)
