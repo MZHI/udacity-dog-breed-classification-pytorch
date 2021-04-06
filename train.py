@@ -45,9 +45,11 @@ def get_args():
     parser.add_argument('--momentum', type=float, required=False, default=0.9,
                         help="Momentum. Using only for SGD optimizer. Default 0.9")
     parser.add_argument('--weight-decay', type=float, required=False, default=0.0,
-                        help="Weight decay. Using in SGD and Adam optimizers")
+                        help="Weight decay. Using in SGD and Adam optimizers. Default 0.0")
     parser.add_argument('--dropout', type=float, default=0.5,
                         help="Value for dropout. Default 0.5")
+    parser.add_argument('--use-augm', type=int, required=False, default=1,
+                        help="Use or not augmentation for train dataset. Default 1")
     parser.add_argument('--model-type', type=str, required=True,
                         help="Type of network model. Select from: [Base, AlexNet]")
     parser.add_argument('--prefix', type=str, required=False,
@@ -97,6 +99,7 @@ def main(args):
     save_last = args.save_last
     resume_train = args.resume_train
     weight_decay = args.weight_decay
+    use_augm = args.use_augm
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,
@@ -133,7 +136,7 @@ def main(args):
     writer = SummaryWriter(tensorboard_dir)
 
     # load datasets and set dataloaders
-    loaders = create_loaders(data_path, mean, std, batch_size, num_workers)
+    loaders = create_loaders(data_path, mean, std, batch_size, num_workers, use_augm)
 
     if num_classes is None:
         num_classes = len(loaders['train'].dataset.class_to_idx)

@@ -4,7 +4,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch import sigmoid
 
-
 # A simple AlexNet architecture as baseline model
 class BasicCNN(nn.Module):
     def __init__(self, n_classes):

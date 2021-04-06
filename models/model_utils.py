@@ -1,7 +1,8 @@
 # -*- coding utf-8 -*-
 
 from models.nn_alex_net import BasicCNN
-
+import torch.nn as nn
+import torchvision.models as torch_models
 
 models = ['Base', 'AlexNet']
 
@@ -15,6 +16,10 @@ def init_model(model_type, n_classes):
     model = None
     if model_type == "Base":
         model = BasicCNN(n_classes=n_classes)
+    elif model_type == "AlexNet":
+        model = torch_models.AlexNet()
+        last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
+        model.classifier[6] = last_layer
     else:
         pass
     return model

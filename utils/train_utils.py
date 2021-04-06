@@ -12,7 +12,7 @@ from utils.general_utils import save_checkpoint
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-def create_loaders(data_path, mean, std, batch_size, num_workers):
+def create_loaders(data_path, mean, std, batch_size, num_workers, use_augm=True):
     # TODO add augmentations
     normalize = transforms.Normalize(
         mean=mean,
@@ -24,8 +24,14 @@ def create_loaders(data_path, mean, std, batch_size, num_workers):
         transforms.ToTensor(),
         normalize
     ])
+    preprocess_augm = transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        normalize
+    ])
 
-    train_data = datasets.ImageFolder(Path(data_path) / "train", transform=preprocess)
+    train_data = datasets.ImageFolder(Path(data_path) / "train", transform=preprocess_augm if use_augm else preprocess)
     valid_data = datasets.ImageFolder(Path(data_path) / "valid", transform=preprocess)
     test_data = datasets.ImageFolder(Path(data_path) / "test", transform=preprocess)
 
