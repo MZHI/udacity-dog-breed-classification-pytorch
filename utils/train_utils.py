@@ -14,8 +14,9 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def create_loaders(data_path, mean, std, batch_size, num_workers,
-                   use_augm=True, color_jit_params=[0.0, 0.0, 0.0, 0.0]):
-    # TODO add augmentations
+                   use_augm=True, color_jit_params=None):
+    if color_jit_params is None:
+        color_jit_params = [0.0, 0.0, 0.0, 0.0]
     normalize = transforms.Normalize(
         mean=mean,
         std=std

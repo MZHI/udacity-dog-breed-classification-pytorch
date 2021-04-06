@@ -69,6 +69,8 @@ def get_args():
                         help="Is resume specific experiment or train from scratch")
     parser.add_argument('--pretrained', type=int, default=0,
                         help="Whether to use pretrained model. Not available for Base_X models. Default 0")
+    parser.add_argument('--num-fc-train', type=int, default=1,
+                        help="Number of fully connected layers to train. Max val: alexnet: 3, vgg16: 3")
 
     args = parser.parse_args()
     return args
@@ -106,6 +108,7 @@ def main(args):
     use_augm = args.use_augm
     color_jitter = args.color_jitter
     pretrained = args.pretrained
+    num_fc_train = args.num_fc_train
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,
@@ -154,7 +157,7 @@ def main(args):
         pass
     else:
         # create model and optimizer
-        model = init_model(model_type, num_classes, pretrained)
+        model = init_model(model_type, num_classes, pretrained, num_fc_train)
         if use_cuda:
             model.cuda()
         optimizer = init_optimizer(optimizer_name, model, lr, weight_decay, momentum)
