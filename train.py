@@ -7,7 +7,8 @@ from pathlib import Path
 from tensorboardX import SummaryWriter
 import torch.nn as nn
 from utils.general_utils import check_checkpoint_exist, create_checkpoint_name
-from utils.general_utils import ask_for_delete, init_optimizer
+from utils.general_utils import ask_for_delete, warn_cuda_not_available, check_cuda_device_id
+from utils.general_utils import init_optimizer
 from utils.train_utils import create_loaders
 from models.model_utils import init_model
 from utils.train_utils import train
@@ -69,6 +70,8 @@ def main(args):
 
     use_cuda = torch.cuda.is_available()
     # TODO ask for resuming if no CUDA available
+    if not use_cuda:
+        warn_cuda_not_available()
 
     # set local input params from args
     data_path = args.data_path
@@ -100,8 +103,13 @@ def main(args):
     checkpoint_dir = Path(checkpoints_dir) / checkpoint_name
     tensorboard_dir = Path(log_path) / checkpoint_name
 
+    if use_cuda:
+        device = check_cuda_device_id(device)
+        torch.cuda.set_device(device)
+
     if resume_train:
         # check existing of checkpoint if resume_train==1
+        raise NotImplemented("This functionality not implemented yet")
         if not check_checkpoint_exist(str(checkpoint_dir)):
             raise Exception("For --resume-train==1 checkpoint {} must exist".format(checkpoint_name))
     else:

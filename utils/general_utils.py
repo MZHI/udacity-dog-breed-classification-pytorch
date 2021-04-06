@@ -52,8 +52,27 @@ def ask_for_delete(path: str):
             raise KeyboardInterrupt('Decline to delete path. Program stopped')
 
 
-def init_optimizer(optimizer_type,
-                     model, lr, momentum=None):
+def warn_cuda_not_available():
+    print("No any CUDA devices found.")
+    answer = input("Do you want to train model on CPU? (y/n)")
+    if answer.lower() not in ['y', 'yes', 'yep']:
+        raise KeyboardInterrupt("Ok. Program stopped")
+
+
+def check_cuda_device_id(device_id):
+    out_device_id = device_id
+    try:
+        torch.cuda.get_device_name(device_id)
+    except AssertionError:
+        print("Invalid device id")
+        answer = input("Do you want to use device with id=0? (y/n)")
+        if answer.lower() not in ['y', 'yes', 'yep']:
+            raise KeyboardInterrupt("Decline to use device id=0. Program stopped")
+        out_device_id = 0
+    return out_device_id
+
+
+def init_optimizer(optimizer_type, model, lr, momentum=None):
     # TODO set schedule for lr decreasing
     optimizer = None
     m = 0
