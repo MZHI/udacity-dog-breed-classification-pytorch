@@ -70,7 +70,7 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1):
     return model
 
 
-def load_checkoint(checkpoint_path, model):
+def load_checkpoint(checkpoint_path, model):
     assert Path(checkpoint_path).exists()
     checkpoint_dict = torch.load(checkpoint_path)
     print(f"Successful loaded checkpoint from {checkpoint_path}")
