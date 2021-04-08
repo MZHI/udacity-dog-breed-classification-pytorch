@@ -38,6 +38,6 @@ def evaluate(loader, model, criterion, use_cuda):
     print('Test Loss: {:.6f}\n'.format(test_loss))
 
     accuracy = 100.0 * correct / total
-    print('\nTest Accuracy: %2d%% (%2d/%2d)' % (accuracy, correct, total))
+    print('\nTest Accuracy: %.2f%% (%2d/%2d)' % (accuracy, correct, total))
 
     return accuracy, test_loss
