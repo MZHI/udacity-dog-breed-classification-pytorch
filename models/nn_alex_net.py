@@ -41,3 +41,55 @@ class BasicCNN(nn.Module):
         x = sigmoid(x)
         
         return x
+
+
+# Dipper AlexNet architecture
+class BasicCNN_v1(nn.Module):
+    def __init__(self, n_classes):
+        super(BasicCNN_v1, self).__init__()
+        self.conv1 = nn.Conv2d(3, 64, 11, 4, padding=2)
+        self.conv2 = nn.Conv2d(64, 156, 5, 1, padding=2)
+        self.conv3 = nn.Conv2d(156, 256, 3, 1, padding=1)
+        self.conv4 = nn.Conv2d(256, 256, 3, 1, padding=1)
+        self.conv5 = nn.Conv2d(256, 192, 3, 1, padding=1)
+
+        self.pool = nn.MaxPool2d(3, 2)
+
+        self.fc1 = nn.Linear(6 * 6 * 192, 4096, bias=True)
+        self.fc2 = nn.Linear(4096, 2048, bias=True)
+        self.fc3 = nn.Linear(2048, n_classes, bias=True)
+
+        self.dropout = nn.Dropout(0.5)
+
+    # forward behavior
+    def forward(self, x):
+        # print(f"x: {x.shape}")
+        x = F.relu(self.conv1(x))
+        # print(f"x after conv1: {x.shape}")
+        x = self.pool(x)
+        # print(f"x after max pooling: {x.shape}")
+        x = F.relu(self.conv2(x))
+        # print(f"x after conv2: {x.shape}")
+        x = self.pool(x)
+        # print(f"x after max pooling: {x.shape}")
+        x = F.relu(self.conv3(x))
+        # print(f"x after conv3: {x.shape}")
+        x = F.relu(self.conv4(x))
+        # print(f"x after conv4: {x.shape}")
+        x = F.relu(self.conv5(x))
+        # print(f"x after conv5: {x.shape}")
+        x = self.pool(x)
+        # print(f"x after max pool: {x.shape}")
+        x = x.view(-1, 6 * 6 * 192)
+        # print(f"x after resize: {x.shape}")
+        x = F.relu(self.fc1(x))
+        # print(f"x after fc1: {x.shape}")
+        x = self.dropout(x)
+        x = F.relu(self.fc2(x))
+        # print(f"x after fc2: {x.shape}")
+        x = self.dropout(x)
+        x = self.fc3(x)
+        # print(f"x after fc3: {x.shape}")
+        x = sigmoid(x)
+
+        return x

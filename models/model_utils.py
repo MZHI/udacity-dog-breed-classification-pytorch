@@ -1,10 +1,10 @@
 # -*- coding utf-8 -*-
 
-from models.nn_alex_net import BasicCNN
+from models.nn_alex_net import BasicCNN, BasicCNN_v1
 import torch.nn as nn
 import torchvision.models as torch_models
 
-models = ['Base', 'AlexNet', 'vgg16']
+models = ['Base', 'Base_1', 'AlexNet', 'vgg16']
 freeze_fc_dict = {
     'AlexNet': [6, 4, 1],
     'vgg16': [6, 3, 0]
@@ -46,6 +46,8 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1):
             model = torch_models.alexnet()
         last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
         model.classifier[6] = last_layer
+    elif model_type == "Base_1":
+        model = BasicCNN_v1(n_classes)
     elif model_type == 'vgg16':
         if pretrained:
             model = torch_models.vgg16(pretrained=True)

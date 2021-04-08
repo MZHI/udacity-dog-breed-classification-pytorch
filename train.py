@@ -53,7 +53,7 @@ def get_args():
     parser.add_argument('--color-jitter', nargs='+', type=float, default=[0.0, 0.0, 0.0, 0.0],
                         help="Parameters of brightness, contrast, saturation and hue for ColorJitter transforms")
     parser.add_argument('--model-type', type=str, required=True,
-                        help="Type of network model. Select from: [Base, AlexNet]")
+                        help="Type of network model. Select from: [Base, Base_1, AlexNet, vgg16]")
     parser.add_argument('--prefix', type=str, required=False,
                         help="Prefix for checkpoint and logs naming")
     parser.add_argument("--scheduler-patience", type=int, default=None,  # recommendation: 3 or 5
@@ -79,7 +79,7 @@ def get_args():
 def main(args):
 
     use_cuda = torch.cuda.is_available()
-    # TODO ask for resuming if no CUDA available
+    # ask for resuming if no CUDA available
     if not use_cuda:
         warn_cuda_not_available()
 
@@ -153,10 +153,10 @@ def main(args):
     model = None
     optimizer = None
     if resume_train:
-        # TODO load model and optimizer
+        # TODO load model state dict and optimizer to resume train
         pass
     else:
-        # create model and optimizer
+        # create model and optimizer from scratch
         model = init_model(model_type, num_classes, pretrained, num_fc_train)
         if use_cuda:
             model.cuda()
