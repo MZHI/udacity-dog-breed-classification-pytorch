@@ -57,7 +57,6 @@ python3 test.py --data-path data/dogImages \
  --batch-size 32 \
  --num-workers 2 \
  --num-classes 133 \
- --lr 0.00001 \
  --model-type Base \
  --exp exp_06
 
