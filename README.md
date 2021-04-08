@@ -1,5 +1,5 @@
 # udacity-dog-breed-classification
-My way to implement and train CNN classifiers both from scratch and use PyTorch's implementations of popular CNNs for transfer learning. Inspirated from task from Udacity Deep Learning Nano Degree (see original task in `dog_app_orig.ipynb`). 
+My way to implement and train CNN classifiers both from scratch and use PyTorch's implementations of popular CNNs for transfer learning. Inspirated from task from Udacity Deep Learning Nano Degree Program (see original task in `dog_app_orig.ipynb`, the [original repo](https://github.com/udacity/deep-learning-v2-pytorch) where you can find this task and more). 
 
 # The purpose of this work
 It is my own learning process of training convolution neural networks using PyTorch framework, from very beginning
