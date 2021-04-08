@@ -45,5 +45,6 @@ Transfer learning are implemented for pretrained torchvision's models AlexNet an
 # Mean and std for dog breed dataset
 To calculate mean and std for dog breed dataset, run `utils/mean_std_calculate.py`
 
-# Feel free to use this work and have a good time with it!
-# If you have any ideas, or noticed any bugs, feel free to open issues, I'll be happy to improve this work!
+
+### Feel free to use this work and have a good time with it!
+### If you have any ideas, or noticed any bugs, feel free to open issues, I'll be happy to improve this work!
