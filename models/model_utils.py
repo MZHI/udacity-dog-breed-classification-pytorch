@@ -3,6 +3,7 @@
 from pathlib import Path
 import torch
 import torch.nn as nn
+import numpy as np
 import torchvision.models as torch_models
 from models.nn_alex_net import BasicCNN, BasicCNN_v1
 
@@ -29,13 +30,63 @@ def check_num_fc_freeze(num_freeze, model_type):
         raise NotImplementedError('Other model architectures not implemented yet')
 
 
-def init_model(model_type, n_classes, pretrained=False, num_fc_train=1):
+# takes in a module and applies weights initialization to value=1
+def weights_init_ones(m):
+    classname = m.__class__.__name__
+    if classname.find('Linear') != -1 or classname.find('Conv2d') != -1:
+        nn.init.constant_(m.weight, 1.0)
+        nn.init.constant_(m.bias, 0.0)
+
+
+# takes in a module and applies the specified weight initialization
+def weights_init_uniform_center(m):
+    classname = m.__class__.__name__
+    # for every Linear layer in a model..
+    if classname.find('Linear') != -1 or classname.find('Conv2d') != -1:
+        # apply a centered, uniform distribution to the weights
+        m.weight.data.uniform_(-0.5, 0.5)
+        m.bias.data.fill_(0)
+
+
+# takes in a module and applies the specified weight initialization
+def weights_init_uniform_rule(m):
+    classname = m.__class__.__name__
+    # for every layer in a model..
+    if classname.find('Linear') != -1:
+        # get the number of the inputs
+        n = m.in_features
+        y = 1.0/np.sqrt(n)
+        m.weight.data.uniform_(-y, y)
+        m.bias.data.fill_(0)
+    elif classname.find('Conv2d') != -1:
+        n = m.in_channels * m.kernel_size[0] * m.kernel_size[0]
+        y = 1.0 / np.sqrt(n)
+        m.weight.data.uniform_(-y, y)
+        m.bias.data.fill_(0)
+
+
+def weight_init(model, weight_init_type):
+    if weight_init_type == 'ones':
+        model.apply(weights_init_ones)
+    elif weight_init_type == 'uniform':
+        model.apply(weights_init_uniform_center)
+    elif weight_init_type == 'general':
+        model.apply(weights_init_uniform_rule)
+    else:
+        raise Exception('Weight initialization type: {} - not supported or not correct'.format(weight_init_type))
+
+
+def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_init_type=None):
     assert check_model_type(model_type)
     model = None
     if model_type == "Base":
         model = BasicCNN(n_classes=n_classes)
+        if weight_init_type is not None:
+            weight_init(model, weight_init_type)
     elif model_type == "Base_1":
         model = BasicCNN_v1(n_classes)
+        if weight_init_type is not None:
+            weight_init(model, weight_init_type)
     elif model_type == "AlexNet":
         if pretrained:
             model = torch_models.alexnet(pretrained=True)

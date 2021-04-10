@@ -71,6 +71,8 @@ def get_args():
                         help="Whether to use pretrained model. Not available for Base_X models. Default 0")
     parser.add_argument('--num-fc-train', type=int, default=1,
                         help="Number of fully connected layers to train. Max val: alexnet: 3, vgg16: 3")
+    parser.add_argument('--weight-init-type', type=str, default=None,
+                        help="Type of weights initialization. Available: [uniform/general/ones]")
 
     args = parser.parse_args()
     return args
@@ -109,6 +111,7 @@ def main(args):
     color_jitter = args.color_jitter
     pretrained = args.pretrained
     num_fc_train = args.num_fc_train
+    weight_init_type = args.weight_init_type
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,
@@ -157,7 +160,7 @@ def main(args):
         pass
     else:
         # create model and optimizer from scratch
-        model = init_model(model_type, num_classes, pretrained, num_fc_train)
+        model = init_model(model_type, num_classes, pretrained, num_fc_train, weight_init_type)
         if use_cuda:
             model.cuda()
         optimizer = init_optimizer(optimizer_name, model, lr, weight_decay, momentum)
