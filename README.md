@@ -1,5 +1,5 @@
 # udacity-dog-breed-classification
-Task from Udacity Deep Learning Nano Degree (see original task in `dog_app_orig.ipynb`). My way to implement and train CNN classifiers both from scratch and use PyTorch's implementations of popular CNNs for transfer learning.
+My way to implement and train CNN classifiers both from scratch and use PyTorch's implementations of popular CNNs for transfer learning. Inspired from task from Udacity Deep Learning Nano Degree Program (see original task in `dog_app_orig.ipynb`, the [original repo](https://github.com/udacity/deep-learning-v2-pytorch) where you can find this task and more). 
 
 # The purpose of this work
 It is my own learning process of training convolution neural networks using PyTorch framework, from very beginning
@@ -14,8 +14,8 @@ It is my own learning process of training convolution neural networks using PyTo
 # How to use
 1. The original task you can read in `dog_app_orig.ipynb`. You can also get links to dog breed dataset there
 2. To see experiments description (from 1 to 25), run `experiments_part_1.ipynb`. Also, you can find conclusions and future work there
-3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
-4. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
+3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal (to see available input parameters for `train.py`, run `python3 train.py -h`)
+5. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
 
 # Checkpoints
 Checkpoints are not provided in this repo, but you can run all experiments from `train_run.sh` bash script
@@ -42,5 +42,9 @@ A lot of experiments are dedicated to train models from scratch. More detail inf
 # Transfer learning
 Transfer learning are implemented for pretrained torchvision's models AlexNet and VGG16, with unfreezing from 1 to 3 last fully connected layers (unfreezing of convolution layers will be implemented in future)
 
-# Feel free to use this work and have a good time this it :)
-# If you have any ideas, or noticed any bugs, feel free to open issues, I'll be happy to improve this work!
+# Mean and std for dog breed dataset
+To calculate mean and std for dog breed dataset, run `utils/mean_std_calculate.py`
+
+
+### Feel free to use this work and have a good time with it!
+### If you have any ideas, or noticed any bugs, feel free to open issues, I'll be happy to improve this work!
