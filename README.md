@@ -14,8 +14,8 @@ It is my own learning process of training convolution neural networks using PyTo
 # How to use
 1. The original task you can read in `dog_app_orig.ipynb`. You can also get links to dog breed dataset there
 2. To see experiments description (from 1 to 25), run `experiments_part_1.ipynb`. Also, you can find conclusions and future work there
-3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
-4. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
+3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal (to see available input parameters for `train.py`, run `python3 train.py -h`)
+5. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
 
 # Checkpoints
 Checkpoints are not provided in this repo, but you can run all experiments from `train_run.sh` bash script
