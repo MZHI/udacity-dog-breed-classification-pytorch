@@ -53,7 +53,8 @@ def get_args():
     parser.add_argument('--color-jitter', nargs='+', type=float, default=[0.0, 0.0, 0.0, 0.0],
                         help="Parameters of brightness, contrast, saturation and hue for ColorJitter transforms")
     parser.add_argument('--model-type', type=str, required=True,
-                        help="Type of network model. Select from: [Base, Base_1, Base_2, AlexNet, vgg16]")
+                        help="Type of network model. Select from: [Base, Base_1, Base_2, AlexNet, vgg16,"
+                             " Base_fix, Base_1_fix]")
     parser.add_argument('--prefix', type=str, required=False,
                         help="Prefix for checkpoint and logs naming")
     parser.add_argument("--scheduler-patience", type=int, default=None,  # recommendation: 3 or 5

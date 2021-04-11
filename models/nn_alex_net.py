@@ -4,10 +4,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch import sigmoid
 
+
 # A simple AlexNet architecture as baseline model
 class BasicCNN(nn.Module):
-    def __init__(self, n_classes):
+    def __init__(self, n_classes, is_fixed=False):
         super(BasicCNN, self).__init__()
+        self.is_fixed = is_fixed
         self.conv1 = nn.Conv2d(3, 48, 11, 4, padding=2)
         self.conv2 = nn.Conv2d(48, 128, 5, 1, padding=2)
         self.conv3 = nn.Conv2d(128, 192, 3, 1, padding=1)
@@ -38,15 +40,17 @@ class BasicCNN(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.dropout(x)
         x = self.fc3(x)
-        x = sigmoid(x)
+        if not self.is_fixed:
+            x = sigmoid(x)
         
         return x
 
 
 # Dipper AlexNet architecture
 class BasicCNN_v1(nn.Module):
-    def __init__(self, n_classes):
+    def __init__(self, n_classes, is_fixed=False):
         super(BasicCNN_v1, self).__init__()
+        self.is_fixed = is_fixed
         self.conv1 = nn.Conv2d(3, 64, 11, 4, padding=2)
         self.conv2 = nn.Conv2d(64, 156, 5, 1, padding=2)
         self.conv3 = nn.Conv2d(156, 256, 3, 1, padding=1)
@@ -63,35 +67,22 @@ class BasicCNN_v1(nn.Module):
 
     # forward behavior
     def forward(self, x):
-        # print(f"x: {x.shape}")
         x = F.relu(self.conv1(x))
-        # print(f"x after conv1: {x.shape}")
         x = self.pool(x)
-        # print(f"x after max pooling: {x.shape}")
         x = F.relu(self.conv2(x))
-        # print(f"x after conv2: {x.shape}")
         x = self.pool(x)
-        # print(f"x after max pooling: {x.shape}")
         x = F.relu(self.conv3(x))
-        # print(f"x after conv3: {x.shape}")
         x = F.relu(self.conv4(x))
-        # print(f"x after conv4: {x.shape}")
         x = F.relu(self.conv5(x))
-        # print(f"x after conv5: {x.shape}")
         x = self.pool(x)
-        # print(f"x after max pool: {x.shape}")
         x = x.view(-1, 6 * 6 * 192)
-        # print(f"x after resize: {x.shape}")
         x = F.relu(self.fc1(x))
-        # print(f"x after fc1: {x.shape}")
         x = self.dropout(x)
         x = F.relu(self.fc2(x))
-        # print(f"x after fc2: {x.shape}")
         x = self.dropout(x)
         x = self.fc3(x)
-        # print(f"x after fc3: {x.shape}")
-        x = sigmoid(x)
-
+        if not self.is_fixed:
+            x = sigmoid(x)
         return x
 
 
