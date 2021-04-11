@@ -5,10 +5,10 @@ import torch
 import torch.nn as nn
 import numpy as np
 import torchvision.models as torch_models
-from models.nn_alex_net import BasicCNN, BasicCNN_v1
+from models.nn_alex_net import BasicCNN, BasicCNN_v1, BasicCNN_v2
 
 
-models = ['Base', 'Base_1', 'AlexNet', 'vgg16']
+models = ['Base', 'Base_1', 'Base_2', 'AlexNet', 'vgg16']
 freeze_fc_dict = {
     'AlexNet': [6, 4, 1],
     'vgg16': [6, 3, 0]
@@ -85,6 +85,10 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
             weight_init(model, weight_init_type)
     elif model_type == "Base_1":
         model = BasicCNN_v1(n_classes)
+        if weight_init_type is not None:
+            weight_init(model, weight_init_type)
+    elif model_type == "Base_2":
+        model = BasicCNN_v2(n_classes)
         if weight_init_type is not None:
             weight_init(model, weight_init_type)
     elif model_type == "AlexNet":

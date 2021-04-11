@@ -18,8 +18,8 @@ def create_loaders(data_path, mean, std, batch_size, num_workers,
     if splits is None:
         splits = ["train", "valid", "test"]
 
-    if color_jit_params is None:
-        color_jit_params = [0.0, 0.0, 0.0, 0.0]
+    # if color_jit_params is None:
+    #     color_jit_params = [0.0, 0.0, 0.0, 0.0]
 
     if debug:
         print(f"splits to load: {splits}")
@@ -39,16 +39,18 @@ def create_loaders(data_path, mean, std, batch_size, num_workers,
         normalize
     ])
 
-    preprocess_augm = transforms.Compose([
-        transforms.ColorJitter(brightness=color_jit_params[0],
-                               contrast=color_jit_params[1],
-                               saturation=color_jit_params[2],
-                               hue=color_jit_params[3]),
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        normalize
-    ])
+    aug_transforms_list = []
+    if color_jit_params is not None:
+        aug_transforms_list.append(transforms.ColorJitter(brightness=color_jit_params[0],
+                                                          contrast=color_jit_params[1],
+                                                          saturation=color_jit_params[2],
+                                                          hue=color_jit_params[3]))
+    aug_transforms_list.append(transforms.RandomResizedCrop(224))
+    aug_transforms_list.append(transforms.RandomHorizontalFlip())
+    aug_transforms_list.append(transforms.ToTensor())
+    aug_transforms_list.append(normalize)
+
+    preprocess_augm = transforms.Compose(aug_transforms_list)
 
     data = {}
     for split in splits:

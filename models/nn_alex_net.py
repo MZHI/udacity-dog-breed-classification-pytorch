@@ -93,3 +93,41 @@ class BasicCNN_v1(nn.Module):
         x = sigmoid(x)
 
         return x
+
+
+# Dipper AlexNet architecture, such as in torchvision's implementation
+class BasicCNN_v2(nn.Module):
+    def __init__(self, n_classes):
+        super(BasicCNN_v2, self).__init__()
+        self.conv1 = nn.Conv2d(3, 64, 11, 4, padding=2)
+        self.conv2 = nn.Conv2d(64, 192, 5, 1, padding=2)
+        self.conv3 = nn.Conv2d(192, 384, 3, 1, padding=1)
+        self.conv4 = nn.Conv2d(384, 256, 3, 1, padding=1)
+        self.conv5 = nn.Conv2d(256, 256, 3, 1, padding=1)
+
+        self.pool = nn.MaxPool2d(3, 2)
+
+        self.fc1 = nn.Linear(6 * 6 * 256, 4096, bias=True)
+        self.fc2 = nn.Linear(4096, 4096, bias=True)
+        self.fc3 = nn.Linear(4096, n_classes, bias=True)
+
+        self.dropout = nn.Dropout(0.5)
+
+    # forward behavior
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        x = self.pool(x)
+        x = F.relu(self.conv2(x))
+        x = self.pool(x)
+        x = F.relu(self.conv3(x))
+        x = F.relu(self.conv4(x))
+        x = F.relu(self.conv5(x))
+        x = self.pool(x)
+        x = x.view(-1, 6 * 6 * 256)
+        x = self.dropout(x)
+        x = F.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+
+        return x
