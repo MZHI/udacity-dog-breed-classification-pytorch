@@ -73,6 +73,8 @@ def get_args():
                         help="Number of fully connected layers to train. Max val: alexnet: 3, vgg16: 3")
     parser.add_argument('--weight-init-type', type=str, default=None,
                         help="Type of weights initialization. Available: [uniform/general/ones]")
+    parser.add_argument('--debug', type=int, default=True,
+                        help='Whether to do detail output or not')
 
     args = parser.parse_args()
     return args
@@ -112,17 +114,27 @@ def main(args):
     pretrained = args.pretrained
     num_fc_train = args.num_fc_train
     weight_init_type = args.weight_init_type
+    debug = args.debug
+
+    if debug:
+        print(f"Cuda available: {use_cuda}")
 
     checkpoint_name = create_checkpoint_name(prefix,
                                              model_type,
                                              optimizer_name,
                                              batch_size,
                                              lr, dropout)
+
     checkpoint_dir = Path(checkpoints_dir) / checkpoint_name
     tensorboard_dir = Path(log_path) / checkpoint_name
 
+    if debug:
+        print(f"Checkpoint name: {checkpoint_name}")
+
     if use_cuda:
         device = check_cuda_device_id(device)
+        if debug:
+            print(f"Device id: {device}")
         torch.cuda.set_device(device)
 
     if resume_train:
@@ -148,7 +160,7 @@ def main(args):
     writer = SummaryWriter(tensorboard_dir)
 
     # load datasets and set dataloaders
-    loaders = create_loaders(data_path, mean, std, batch_size, num_workers, use_augm)
+    loaders = create_loaders(data_path, mean, std, batch_size, num_workers, use_augm, debug=debug)
 
     if num_classes is None:
         num_classes = len(loaders['train'].dataset.class_to_idx)
@@ -157,10 +169,10 @@ def main(args):
     optimizer = None
     if resume_train:
         # TODO load model state dict and optimizer to resume train
-        pass
+        raise NotImplementedError('Resuming training not implemented yet')
     else:
         # create model and optimizer from scratch
-        model = init_model(model_type, num_classes, pretrained, num_fc_train, weight_init_type)
+        model = init_model(model_type, num_classes, pretrained, num_fc_train, weight_init_type, debug=debug)
         if use_cuda:
             model.cuda()
         optimizer = init_optimizer(optimizer_name, model, lr, weight_decay, momentum)

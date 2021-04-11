@@ -14,12 +14,17 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def create_loaders(data_path, mean, std, batch_size, num_workers,
-                   use_augm=True, color_jit_params=None, splits=None):
+                   use_augm=True, color_jit_params=None, splits=None, debug=False):
     if splits is None:
         splits = ["train", "valid", "test"]
 
     if color_jit_params is None:
         color_jit_params = [0.0, 0.0, 0.0, 0.0]
+
+    if debug:
+        print(f"splits to load: {splits}")
+        print(f"Color Jitter parameters: {color_jit_params}")
+
     normalize = transforms.Normalize(
         mean=mean,
         std=std
@@ -50,22 +55,18 @@ def create_loaders(data_path, mean, std, batch_size, num_workers,
         transform_cur = preprocess
         if split == "train" and use_augm:
             transform_cur = preprocess_augm
+            if debug:
+                print(f"For [{split}] dataset use augmentation: {use_augm}")
         data[split] = datasets.ImageFolder(Path(data_path) / split, transform=transform_cur)
-    # train_data = datasets.ImageFolder(Path(data_path) / "train", transform=preprocess_augm if use_augm else preprocess)
-    # valid_data = datasets.ImageFolder(Path(data_path) / "valid", transform=preprocess)
-    # test_data = datasets.ImageFolder(Path(data_path) / "test", transform=preprocess)
+
+    if debug:
+        print(f"Batch size: {batch_size}, num workers: {num_workers}")
 
     loaders = {}
     for split in splits:
         loaders[split] = torch.utils.data.DataLoader(data[split], batch_size=batch_size,
                                                      num_workers=num_workers, shuffle=True)
 
-    # loaders = {'train': torch.utils.data.DataLoader(train_data, batch_size=batch_size,
-    #                                                 num_workers=num_workers, shuffle=True),
-    #            'valid': torch.utils.data.DataLoader(valid_data, batch_size=batch_size,
-    #                                                 num_workers=num_workers, shuffle=True),
-    #            'test': torch.utils.data.DataLoader(test_data, batch_size=batch_size,
-    #                                                num_workers=num_workers, shuffle=True)}
     return loaders
 
 

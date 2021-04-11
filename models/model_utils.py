@@ -76,7 +76,7 @@ def weight_init(model, weight_init_type):
         raise Exception('Weight initialization type: {} - not supported or not correct'.format(weight_init_type))
 
 
-def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_init_type=None):
+def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_init_type=None, debug=False):
     assert check_model_type(model_type)
     model = None
     if model_type == "Base":
@@ -117,7 +117,11 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
         last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
         model.classifier[6] = last_layer
     else:
-        pass
+        raise ValueError(f'Type of model {model_type} incorrect')
+
+    if debug:
+        print(model)
+
     return model
 
 
