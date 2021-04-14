@@ -245,6 +245,193 @@
 #  --resume-train 0
 
 ### experiment 35
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --mean 0.4864 0.4560 0.3918 \
+#  --std 0.2602 0.2536 0.2562 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --model-type Base_1_fix \
+#  --prefix scratch_exp_35_wd_0.0005_aug2_w_cj \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 36
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --mean 0.4864 0.4560 0.3918 \
+#  --std 0.2602 0.2536 0.2562 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --model-type vgg16 \
+#  --prefix scratch_exp_36_wd_0.0005_aug2_w_cj \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 37
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 0 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --mean 0.4864 0.4560 0.3918 \
+#  --std 0.2602 0.2536 0.2562 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16 \
+#  --prefix scratch_exp_37_wd_0.0005_aug2_wo_cj \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0
+
+### experiment 38
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 2 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type AlexNet \
+#  --prefix pretrain_exp_38_wd_0.0005_augm1_fc_1_fix \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 1
+
+### experiment 39
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 2 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type AlexNet \
+#  --prefix pretrain_exp_39_wd_0.0005_augm_cj_fc_2_fix \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 2
+
+### experiment 40
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 2 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type AlexNet \
+#  --prefix pretrain_exp_40_wd_0.0005_augm_cj_fc_3_fix \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 3
+
+### experiment 41
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 2 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type AlexNet \
+#  --prefix pretrain_exp_41_wd_0.0005_augm_wo_cj_fc_3_fix \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 3
+
+### experiment 42
 python3 train.py --data-path data/dogImages \
  --checkpoints-dir checkpoints \
  --device 1 \
@@ -252,21 +439,22 @@ python3 train.py --data-path data/dogImages \
  --batch-size 32 \
  --num-epochs 500 \
  --early-stopping 10 \
- --num-workers 4 \
+ --num-workers 2 \
  --num-classes 133 \
  --lr 0.01 \
  --optim SGD \
  --weight-decay 0.0005 \
- --mean 0.4864 0.4560 0.3918 \
- --std 0.2602 0.2536 0.2562 \
  --momentum 0.9 \
  --dropout 0.5 \
  --use-augm 1 \
- --color-jitter 0.4 0.4 0.4 0.2 \
- --model-type Base_1_fix \
- --prefix scratch_exp_35_wd_0.0005_aug2_w_cj \
+ --model-type AlexNet \
+ --prefix pretrain_exp_42_wd_0.0005_augm_wo_cj_wo_hflip_fc_3_fix \
  --scheduler-patience 3 \
  --scheduler-factor 0.5 \
  --scheduler-cooldown 2 \
  --save-last 1 \
- --resume-train 0
+ --resume-train 0 \
+ --pretrained 1 \
+ --num-fc-train 3 \
+ --aug_h_flip 0
+
