@@ -48,10 +48,17 @@ def get_args():
                         help="Weight decay. Using in SGD and Adam optimizers. Default 0.0")
     parser.add_argument('--dropout', type=float, default=0.5,
                         help="Value for dropout. Default 0.5")
+
+    ### augmentations
     parser.add_argument('--use-augm', type=int, required=False, default=1,
                         help="Use or not augmentation for train dataset. Default 1")
     parser.add_argument('--color-jitter', nargs='+', type=float, default=[0.0, 0.0, 0.0, 0.0],
                         help="Parameters of brightness, contrast, saturation and hue for ColorJitter transforms")
+    parser.add_argument('--aug_h_flip', type=int, default=1,
+                        help='Whether to use or not RandomHorizontalFlip augmentation')
+    parser.add_argument('--aug_resize_crop', type=int, default=1,
+                        help='Whether to use or not RandomResizedCrop augmentation')
+
     parser.add_argument('--model-type', type=str, required=True,
                         help="Type of network model. Select from: [Base, Base_1, Base_2, AlexNet, vgg16,"
                              " Base_fix, Base_1_fix]")
@@ -110,8 +117,12 @@ def main(args):
     save_last = args.save_last
     resume_train = args.resume_train
     weight_decay = args.weight_decay
+
     use_augm = args.use_augm
     color_jitter = args.color_jitter
+    aug_h_flip = args.aug_h_flip
+    aug_resize_crop = args.aug_resize_crop
+
     pretrained = args.pretrained
     num_fc_train = args.num_fc_train
     weight_init_type = args.weight_init_type
@@ -162,7 +173,8 @@ def main(args):
 
     # load datasets and set dataloaders
     loaders = create_loaders(data_path, mean, std, batch_size, num_workers,
-                             use_augm, color_jit_params=color_jitter, debug=debug)
+                             use_augm, color_jit_params=color_jitter, debug=debug,
+                             aug_h_flip=aug_h_flip, aug_resize_crop=aug_resize_crop)
 
     if num_classes is None:
         num_classes = len(loaders['train'].dataset.class_to_idx)

@@ -109,8 +109,16 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
                 param.requires_grad = False
             model.avgpool.requires_grad = False
 
+            # freeze FC layers which don't want to train
             for i in list(range(num_fc_train, 3)):
                 model.classifier[freeze_fc_dict['AlexNet'][i]].requires_grad = False
+
+            # reinitialize FC layers depend of parameter num_fc_train, except last FC
+            for i in list(range(1, num_fc_train)):
+                layer_cur = nn.Linear(model.classifier[freeze_fc_dict['AlexNet'][i]].in_features,
+                                      model.classifier[freeze_fc_dict['AlexNet'][i]].out_features)
+                model.classifier[freeze_fc_dict['AlexNet'][i]] = layer_cur
+
         else:
             model = torch_models.alexnet()
         last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
@@ -123,8 +131,16 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
             for param in model.features.parameters():
                 param.requires_grad = False
 
+            # freeze FC layers which don't want to train
             for i in list(range(num_fc_train, 3)):
                 model.classifier[freeze_fc_dict['vgg16'][i]].requires_grad = False
+
+            # reinitialize FC layers depend of parameter num_fc_train, except last FC layer
+            for i in list(range(1, num_fc_train)):
+                layer_cur = nn.Linear(model.classifier[freeze_fc_dict['vgg16'][i]].in_features,
+                                      model.classifier[freeze_fc_dict['vgg16'][i]].out_features)
+                model.classifier[freeze_fc_dict['vgg16'][i]] = layer_cur
+
         else:
             model = torch_models.vgg16()
         last_layer = nn.Linear(model.classifier[6].in_features, n_classes)

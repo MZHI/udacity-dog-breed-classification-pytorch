@@ -14,7 +14,8 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def create_loaders(data_path, mean, std, batch_size, num_workers,
-                   use_augm=True, color_jit_params=None, splits=None, debug=False):
+                   use_augm=True, color_jit_params=None, splits=None, debug=False,
+                   aug_h_flip=True, aug_resize_crop=True):
     if splits is None:
         splits = ["train", "valid", "test"]
 
@@ -45,8 +46,10 @@ def create_loaders(data_path, mean, std, batch_size, num_workers,
                                                           contrast=color_jit_params[1],
                                                           saturation=color_jit_params[2],
                                                           hue=color_jit_params[3]))
-    aug_transforms_list.append(transforms.RandomResizedCrop(224))
-    aug_transforms_list.append(transforms.RandomHorizontalFlip())
+    if aug_resize_crop:
+        aug_transforms_list.append(transforms.RandomResizedCrop(224))
+    if aug_h_flip:
+        aug_transforms_list.append(transforms.RandomHorizontalFlip())
     aug_transforms_list.append(transforms.ToTensor())
     aug_transforms_list.append(normalize)
 
