@@ -17,6 +17,14 @@ It is my own learning process of training convolution neural networks using PyTo
 3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal (to see available input parameters for `train.py`, run `python3 train.py -h`)
 5. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
 
+# Dataset
+The [dog breed](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip) dataset is used. 
+Summary:
+* 133 classes
+* 6680 train images
+* 835 valid images
+* 836 test images
+
 # Checkpoints
 Checkpoints are not provided in this repo, but you can run all experiments from `train_run.sh` bash script
 
