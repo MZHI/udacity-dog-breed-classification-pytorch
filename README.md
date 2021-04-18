@@ -1,5 +1,5 @@
 # udacity-dog-breed-classification
-My way to implement and train CNN classifiers both from scratch and use PyTorch's implementations of popular CNNs for transfer learning. Inspired from task from Udacity Deep Learning Nano Degree Program (see original task in `dog_app_orig.ipynb`, the [original repo](https://github.com/udacity/deep-learning-v2-pytorch) where you can find this task and more). 
+My way to implement and train CNN classifiers both from scratch and use PyTorch's implementations of popular CNNs for transfer learning. Inspired from task from Udacity Deep Learning Nano Degree Program (see original task in `original_task/dog_app_orig.ipynb`, the [original repo](https://github.com/udacity/deep-learning-v2-pytorch) where you can find this task and more). 
 
 # The purpose of this work
 It is my own learning process of training convolution neural networks using PyTorch framework, from very beginning
@@ -12,7 +12,7 @@ It is my own learning process of training convolution neural networks using PyTo
 * You can repeat all experiments
 
 # How to use
-1. The original task you can read in `dog_app_orig.ipynb`. You can also get links to dog breed dataset there
+1. The original task you can read in `original_task/dog_app_orig.ipynb`. You can also get links to dog breed dataset there
 2. To see experiments description (from 1 to 25), run `experiments_part_1.ipynb`. Also, you can find conclusions and future work there
 3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal (to see available input parameters for `train.py`, run `python3 train.py -h`)
 5. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
@@ -26,17 +26,24 @@ Summary:
 * 836 test images
 
 # Checkpoints
-Checkpoints are not provided in this repo, but you can run all experiments from `train_run.sh` bash script
+Checkpoints are not provided in this repo, but you can run all experiments using bash scripts:
+* `train_run.sh` - bash script for running experiments 1-25
+* `train_run_p2.sh` - bash script for running experiments 26-50
 
 # Tensorboard logs
 Tensorboard logs for all experiments are provided. To run tensorboard locally, run:
 ```sh
 tensorboard -logdir tensorboard_logs/ 
 ```
+or
+```sh
+tensorboard -logdir tensorboard_logs_p2/ 
+```
 To run tensorboard to get access from remote server, run (change [port] to your value):
 ```sh
 tensorboard -logdir tensorboard_logs/ --port [port] --host 0.0.0.0
 ```
+Also, you can merge all logs to same directory to view all experiments on same plot
 
 # Models description
 Models are described in `experiments_part_1.ipynb`. Brief info: 
