@@ -60,8 +60,8 @@ def get_args():
                         help='Whether to use or not RandomResizedCrop augmentation')
 
     parser.add_argument('--model-type', type=str, required=True,
-                        help="Type of network model. Select from: [Base, Base_1, Base_2, AlexNet, vgg16,"
-                             " Base_fix, Base_1_fix]")
+                        help="Type of network model. Select from: [Base, Base_fix, Base_1, Base_1_fix, Base_2,"
+                                "AlexNet, vgg16, vgg16_bn ]")
     parser.add_argument('--prefix', type=str, required=False,
                         help="Prefix for checkpoint and logs naming")
     parser.add_argument("--scheduler-patience", type=int, default=None,  # recommendation: 3 or 5

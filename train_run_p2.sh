@@ -432,29 +432,247 @@
 #  --num-fc-train 3
 
 ### experiment 42
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 2 \
+#  --num-classes 133 \
+#  --lr 0.01 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type AlexNet \
+#  --prefix pretrain_exp_42_wd_0.0005_augm_wo_cj_wo_hflip_fc_3_fix \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 3 \
+#  --aug_h_flip 0
+
+### experiment 43
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16 \
+#  --prefix pretrain_exp_43_wd_0.0005_augm_wo_cj_wo_hflip_fc_1 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 1 \
+#  --aug_h_flip 0
+
+### experiment 44
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16 \
+#  --prefix pretrain_exp_44_wd_0.0005_augm_wo_cj_wo_hflip_fc_2 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 2 \
+#  --aug_h_flip 0
+
+### experiment 45
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 0 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16 \
+#  --prefix pretrain_exp_45_wd_0.0005_augm_wo_cj_wo_hflip_fc_3 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 3 \
+#  --aug_h_flip 0
+
+### experiment 46
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 0 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16_bn \
+#  --prefix pretrain_exp_46_wd_0.0005_augm_wo_cj_wo_hflip_fc_1 \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 1 \
+#  --num-fc-train 1 \
+#  --aug_h_flip 0
+
+### experiment 47
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16_bn \
+#  --prefix scratch_exp_47_wd_0.0005_augm_wo_cj_wo_hflip \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 0 \
+#  --num-fc-train 1 \
+#  --aug_h_flip 0
+
+### experiment 48
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 1 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16_bn \
+#  --prefix scratch_exp_48_wd_0.0005_augm_w_cj_wo_hflip \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 0 \
+#  --num-fc-train 1 \
+#  --aug_h_flip 0
+
+### experiment 49
+# python3 train.py --data-path data/dogImages \
+#  --checkpoints-dir checkpoints \
+#  --device 0 \
+#  --log-path tensorboard_logs_p2 \
+#  --batch-size 32 \
+#  --num-epochs 500 \
+#  --early-stopping 10 \
+#  --num-workers 4 \
+#  --num-classes 133 \
+#  --lr 0.001 \
+#  --optim SGD \
+#  --weight-decay 0.0005 \
+#  --color-jitter 0.4 0.4 0.4 0.2 \
+#  --momentum 0.9 \
+#  --dropout 0.5 \
+#  --use-augm 1 \
+#  --model-type vgg16_bn \
+#  --prefix scratch_exp_49_wd_0.0005_augm_w_cj_w_hflip \
+#  --scheduler-patience 3 \
+#  --scheduler-factor 0.5 \
+#  --scheduler-cooldown 2 \
+#  --save-last 1 \
+#  --resume-train 0 \
+#  --pretrained 0 \
+#  --num-fc-train 1 \
+#  --aug_h_flip 1
+
+### experiment 50
 python3 train.py --data-path data/dogImages \
  --checkpoints-dir checkpoints \
- --device 1 \
+ --device 0 \
  --log-path tensorboard_logs_p2 \
  --batch-size 32 \
  --num-epochs 500 \
  --early-stopping 10 \
- --num-workers 2 \
+ --num-workers 4 \
  --num-classes 133 \
- --lr 0.01 \
+ --lr 0.001 \
  --optim SGD \
  --weight-decay 0.0005 \
+ --color-jitter 0.4 0.4 0.4 0.2 \
  --momentum 0.9 \
  --dropout 0.5 \
  --use-augm 1 \
- --model-type AlexNet \
- --prefix pretrain_exp_42_wd_0.0005_augm_wo_cj_wo_hflip_fc_3_fix \
+ --model-type vgg16_bn \
+ --prefix pretrain_exp_50_wd_0.0005_augm_w_cj_w_hflip_fc_1 \
  --scheduler-patience 3 \
  --scheduler-factor 0.5 \
  --scheduler-cooldown 2 \
  --save-last 1 \
  --resume-train 0 \
  --pretrained 1 \
- --num-fc-train 3 \
- --aug_h_flip 0
-
+ --num-fc-train 1 \
+ --aug_h_flip 1

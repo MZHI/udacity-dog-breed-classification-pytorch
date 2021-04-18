@@ -8,11 +8,12 @@ import torchvision.models as torch_models
 from models.nn_alex_net import BasicCNN, BasicCNN_v1, BasicCNN_v2
 
 
-models = ['Base', 'Base_1', 'Base_2', 'AlexNet', 'vgg16',
-          'Base_fix', 'Base_1_fix']
+models = ['Base', 'Base_1', 'Base_2', 'Base_fix', 'Base_1_fix',
+          'AlexNet', 'vgg16', "vgg16_bn"]
 freeze_fc_dict = {
     'AlexNet': [6, 4, 1],
-    'vgg16': [6, 3, 0]
+    'vgg16': [6, 3, 0],
+    'vgg16_bn': [6, 3, 0]
 }
 
 
@@ -26,6 +27,8 @@ def check_num_fc_freeze(num_freeze, model_type):
     elif model_type == 'AlexNet':
         assert num_freeze <= 3
     elif model_type == 'vgg16':
+        assert num_freeze <= 3
+    elif model_type == 'vgg16_bn':
         assert num_freeze <= 3
     else:
         raise NotImplementedError('Other model architectures not implemented yet')
@@ -81,30 +84,34 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
     assert check_model_type(model_type)
     model = None
     if model_type == "Base":
+        # only from scratch
         model = BasicCNN(n_classes=n_classes)
         if weight_init_type is not None:
             weight_init(model, weight_init_type)
     elif model_type == "Base_fix":
+        # only from scratch
         model = BasicCNN(n_classes, True)
         if weight_init_type is not None:
             weight_init(model, weight_init_type)
     elif model_type == "Base_1":
+        # only from scratch
         model = BasicCNN_v1(n_classes)
         if weight_init_type is not None:
             weight_init(model, weight_init_type)
     elif model_type == "Base_1_fix":
+        # only from scratch
         model = BasicCNN_v1(n_classes, True)
         if weight_init_type is not None:
             weight_init(model, weight_init_type)
     elif model_type == "Base_2":
+        # only from scratch
         model = BasicCNN_v2(n_classes)
         if weight_init_type is not None:
             weight_init(model, weight_init_type)
     elif model_type == "AlexNet":
+        model = torch_models.alexnet(pretrained=pretrained)
         if pretrained:
-            model = torch_models.alexnet(pretrained=True)
             # freeze all layers except num_fc_train FC layers
-
             for param in model.features.parameters():
                 param.requires_grad = False
             model.avgpool.requires_grad = False
@@ -118,16 +125,12 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
                 layer_cur = nn.Linear(model.classifier[freeze_fc_dict['AlexNet'][i]].in_features,
                                       model.classifier[freeze_fc_dict['AlexNet'][i]].out_features)
                 model.classifier[freeze_fc_dict['AlexNet'][i]] = layer_cur
-
-        else:
-            model = torch_models.alexnet()
         last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
         model.classifier[6] = last_layer
     elif model_type == 'vgg16':
+        model = torch_models.vgg16(pretrained=pretrained)
         if pretrained:
-            model = torch_models.vgg16(pretrained=True)
             # freeze all layers except num_fc_train FC layers
-
             for param in model.features.parameters():
                 param.requires_grad = False
 
@@ -140,9 +143,23 @@ def init_model(model_type, n_classes, pretrained=False, num_fc_train=1, weight_i
                 layer_cur = nn.Linear(model.classifier[freeze_fc_dict['vgg16'][i]].in_features,
                                       model.classifier[freeze_fc_dict['vgg16'][i]].out_features)
                 model.classifier[freeze_fc_dict['vgg16'][i]] = layer_cur
+        last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
+        model.classifier[6] = last_layer
+    elif model_type == 'vgg16_bn':
+        model = torch_models.vgg16_bn(pretrained=pretrained)
+        if pretrained:
+            for param in model.features.parameters():
+                param.requires_grad = False
 
-        else:
-            model = torch_models.vgg16()
+            # freeze FC layers which don't want to train
+            for i in list(range(num_fc_train, 3)):
+                model.classifier[freeze_fc_dict['vgg16_bn'][i]].requires_grad = False
+
+            # reinitialize FC layers depend of parameter num_fc_train, except last FC layer
+            for i in list(range(1, num_fc_train)):
+                layer_cur = nn.Linear(model.classifier[freeze_fc_dict['vgg16_bn'][i]].in_features,
+                                      model.classifier[freeze_fc_dict['vgg16_bn'][i]].out_features)
+                model.classifier[freeze_fc_dict['vgg16_bn'][i]] = layer_cur
         last_layer = nn.Linear(model.classifier[6].in_features, n_classes)
         model.classifier[6] = last_layer
     else:
