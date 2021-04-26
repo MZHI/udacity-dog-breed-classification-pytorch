@@ -47,12 +47,13 @@ Also, you can merge all logs to same directory to view all experiments on same p
 
 # Models description
 Models are described in `experiments_part_1.ipynb`. Brief info: 
-* two implementations of AlexNet from [original paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) (`Base` and `Base_1`), which are training from scratch 
+* three implementations of AlexNet from [original paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) (`Base_fix` and `Base_1_fix` and `Base_2`), which are training from scratch 
 * AlexNet from torchvision's implementation, which is training both from scratch and using transfer learning
 * VGG16 from torchvision's implementation, which is training both from scratch and using transfer learning
+* VGG16 with batch normalization from torchvision's implementation, which is training both from scratch and using transfer learning
 
 # Train models from scratch
-A lot of experiments are dedicated to train models from scratch. More detail information see in `experiments_part_1.ipynb`
+A lot of experiments are dedicated to train models from scratch. More detail information see in `experiments_part_1.ipynb` and `experiments_part_2.ipynb`
 
 # Transfer learning
 Transfer learning are implemented for pretrained torchvision's models AlexNet and VGG16, with unfreezing from 1 to 3 last fully connected layers (unfreezing of convolution layers will be implemented in future)
@@ -60,6 +61,8 @@ Transfer learning are implemented for pretrained torchvision's models AlexNet an
 # Mean and std for dog breed dataset
 To calculate mean and std for dog breed dataset, run `utils/mean_std_calculate.py`
 
+# Evaluation models from checkpoints
+See examples in `evaluate_run.sh` and `evaluate_run_2.sh`
 
 ### Feel free to use this work and have a good time with it!
 ### If you have any ideas, or noticed any bugs, feel free to open issues, I'll be happy to improve this work!
