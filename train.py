@@ -61,7 +61,7 @@ def get_args():
 
     parser.add_argument('--model-type', type=str, required=True,
                         help="Type of network model. Select from: [Base, Base_fix, Base_1, Base_1_fix, Base_2,"
-                                "AlexNet, vgg16, vgg16_bn ]")
+                             "AlexNet, vgg16, vgg16_bn]")
     parser.add_argument('--prefix', type=str, required=False,
                         help="Prefix for checkpoint and logs naming")
     parser.add_argument("--scheduler-patience", type=int, default=None,  # recommendation: 3 or 5
@@ -89,7 +89,6 @@ def get_args():
 
 
 def main(args):
-
     use_cuda = torch.cuda.is_available()
     # ask for resuming if no CUDA available
     if not use_cuda:
