@@ -13,9 +13,9 @@ It is my own learning process of training convolution neural networks using PyTo
 
 # How to use
 1. The original task you can read in `original_task/dog_app_orig.ipynb`. You can also get links to dog breed dataset there
-2. To see experiments description (from 1 to 25), run `experiments_part_1.ipynb`. Also, you can find conclusions and future work there
+2. To see experiments description (from 1 to 25), run `experiments_part_1.ipynb`. For next serie of experiments (from 26 to 51) see `experiments_part_2.ipynb`. Also, you can find conclusions and future work in there notebooks.
 3. To run specific experiment, go to `train_run.sh` bash script, find experiment you are interested in, copy command and run in terminal (to see available input parameters for `train.py`, run `python3 train.py -h`)
-5. To evaluate model from specific experiment, go to `evaluate_run.sh` bash script, find experiment you are interested in, copy command and run in terminal
+5. To evaluate model from specific experiment, go to `evaluate_run.sh` or `evaluate_run_2.sh` bash script, find experiment you are interested in, copy command and run in terminal
 
 # Dataset
 The [dog breed](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip) dataset is used. 
@@ -46,8 +46,8 @@ tensorboard -logdir tensorboard_logs/ --port [port] --host 0.0.0.0
 Also, you can merge all logs to same directory to view all experiments on same plot
 
 # Models description
-Models are described in `experiments_part_1.ipynb`. Brief info: 
-* three implementations of AlexNet from [original paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) (`Base_fix` and `Base_1_fix` and `Base_2`), which are training from scratch 
+Models are described in `experiments_part_1.ipynb` and `experiments_part_2.ipynb`. Brief info: 
+* Three implementations of AlexNet from [original paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) (`Base_fix` and `Base_1_fix` and `Base_2`), which are training from scratch 
 * AlexNet from torchvision's implementation, which is training both from scratch and using transfer learning
 * VGG16 from torchvision's implementation, which is training both from scratch and using transfer learning
 * VGG16 with batch normalization from torchvision's implementation, which is training both from scratch and using transfer learning
